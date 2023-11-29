@@ -1,0 +1,19 @@
+{
+  "name": "mock-json-server",
+  "version": "1.0.0",
+  "description": "Mock Json Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Mock",
+    "Server"
+  ],
+  "author": "Irfan Rashid Nagoo",
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "^0.17.4",
+    "multer": "^1.4.5-lts.1"
+  }
+}

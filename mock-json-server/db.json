@@ -1,0 +1,16 @@
+{
+    "podcasts": [
+        {
+            "id": 1,
+            "title": "Trends in Software Technology",
+            "descrption": "This podcast is about latest software technology trends",
+            "author": "Mike Fabs",
+            "category": "Software",
+            "uri":"/audio/abc.mp3",
+            "duration": "7:47",
+            "tags": ["Software", "Technology"],
+            "createDate": "2023-11-29",
+            "modifiedDate": "2023-11-29"
+        }
+    ]
+}
