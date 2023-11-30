@@ -1,1 +1,10 @@
 @import "bootstrap";
+
+
+.bg-indigo {
+    background-color: #2C1543;
+}
+
+.bg-indigo-fade {
+    background-color: #573479;
+}
