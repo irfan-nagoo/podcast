@@ -1,16 +1,33 @@
 {
-    "podcasts": [
-        {
-            "id": 1,
-            "title": "Trends in Software Technology",
-            "descrption": "This podcast is about latest software technology trends",
-            "author": "Mike Fabs",
-            "category": "Software",
-            "uri":"/audio/abc.mp3",
-            "duration": "7:47",
-            "tags": ["Software", "Technology"],
-            "createDate": "2023-11-29",
-            "modifiedDate": "2023-11-29"
-        }
-    ]
+  "podcasts": [
+    {
+      "title": "Trends in Software Technology",
+      "descrption": "This podcast is about latest software technology trends",
+      "author": "Mike Fabs",
+      "category": "Software",
+      "duration": "7:47",
+      "tags": [
+        "Software",
+        "Technology"
+      ],
+      "createDate": "2023-11-30T08:02:34.124Z",
+      "modifiedDate": "2023-11-30T08:02:34.128Z",
+      "id": 1,
+      "uri": "/audio/445b4e61-0c05-451b-a879-2af2df2e9aed.jpeg"
+    },
+    {
+      "title": "New Biotechnology advancement",
+      "descrption": "This podcast is about new biotechnology advancement",
+      "author": "John Williamson",
+      "category": "Science",
+      "tags": [
+        "Science",
+        "Biotechnology"
+      ],
+      "createDate": "2023-11-30T08:02:35.356Z",
+      "modifiedDate": "2023-11-30T08:13:32.417Z",
+      "id": 2,
+      "uri": "/audio/bc3059f1-22b7-4788-9a6f-0270d4e66eb1.svg+xml"
+    }
+  ]
 }
