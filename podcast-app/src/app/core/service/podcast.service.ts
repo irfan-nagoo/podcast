@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Podcast } from '../model/podcast';
 
 @Injectable({
   providedIn: 'root'
@@ -6,4 +7,7 @@ import { Injectable } from '@angular/core';
 export class PodcastService {
 
   constructor() { }
+
+  addPodcast() {}
+
 }

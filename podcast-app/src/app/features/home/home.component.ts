@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Podcast } from '../../core/model/podcast';
+import { PodcastListService } from '../../core/service/podcast-list.service';
 
 
 @Component({
@@ -11,6 +12,8 @@ import { Podcast } from '../../core/model/podcast';
 })
 export class HomeComponent {
 
+  constructor(private podcastListService: PodcastListService) {}
+  
   podcast: Podcast = {
     id: 100,
     title: 'Trends in software',
