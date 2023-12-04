@@ -8,6 +8,7 @@ export interface Podcast {
     category: string;
     duration: string,
     tags: string[];
+    rating: string;
     createDate: Date;
     modifiedDate: Date;
 }

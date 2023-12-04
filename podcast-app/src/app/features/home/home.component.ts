@@ -1,29 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Podcast } from '../../core/model/podcast';
 import { PodcastListService } from '../../core/service/podcast-list.service';
-
+import { DataGridComponent } from '../../shared/data-grid/data-grid.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [DataGridComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  constructor(private podcastListService: PodcastListService) {}
-  
-  podcast: Podcast = {
-    id: 100,
-    title: 'Trends in software',
-    description: 'The podcast about software trends',
-    author: 'James Helmton',
-    uri: '/audio/abc.mp3',
-    category: 'Software',
-    duration: '7.47',
-    tags: ["Software", "Technology"],
-    createDate: new Date(),
-    modifiedDate: new Date()
+  podcasts: Podcast[] = [];
+
+  constructor(private podcastListService: PodcastListService) { }
+
+  ngOnInit(): void {
+    this.getPodcasts();
+  }
+
+  getPodcasts(): void {
+    this.podcastListService.getAllPodcasts().subscribe(
+      podcasts => this.podcasts = podcasts);
   };
+
 }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PodcastService } from '../../core/service/podcast.service';
+import { PodcastService } from '../../../core/service/podcast.service';
 
 @Component({
   selector: 'app-podcast',

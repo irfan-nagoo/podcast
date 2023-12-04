@@ -1,0 +1,166 @@
+<div class="container">
+    <!-- Filter and Sort options-->
+    <div class="d-flex flex-row py-2">
+        <div class="">
+            <button class="btn btn-sm border border-1 fw-bold py-3" type="button">
+                Filter by
+                <svg width="16" height="16" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M6.5 0V18.1684H0L8.125 24.2245L16.25 18.1684H9.75V0H6.5ZM13 0V3.02806H19.5V0H13ZM13 6.05612V9.08418H22.75V6.05612H13ZM13 12.1122V15.1403H26V12.1122H13Z"
+                        fill="black" />
+                </svg>
+            </button>
+        </div>
+        <span class="px-1"></span>
+        <div class="d-flex flex-column dropdown border border-1 px-2">
+            <span id="sortBy" class="align-top px-1 fw-bold">Sort by</span>
+            <button class="btn btn-sm py-1 px-0 dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="selected" class="px-1">Newest</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#">Newest</a></li>
+                <li><a class="dropdown-item" href="#">Most Rated</a></li>
+                <li><a class="dropdown-item" href="#">Title</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Filter option layout-->
+    <div class="d-flex flex-row">
+        <div class="col-3 accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-controls="collapseOne" aria-expanded="true">
+                        Category
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                    <ul class="list-unstyled fw-normal pt-1 small">
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">Science</label>
+                        </li>
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">Technology</label>
+                        </li>
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">Software</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-controls="collapseTwo" aria-expanded="true">
+                        Tags
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                    <ul class="list-unstyled fw-normal pt-1 small">
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">Science</label>
+                        </li>
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">Technology</label>
+                        </li>
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">General</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-controls="collapseThree" aria-expanded="true">
+                        Duration
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                    <ul class="list-unstyled fw-normal pt-1 small">
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">0-5 mins</label>
+                        </li>
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">5-10 mins</label>
+                        </li>
+                        <li class="px-4">
+                            <input type="checkbox">
+                            <label class="px-1">More than 10 mins</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Data with card layout -->
+        <div class="px-3 w-100">
+            <div *ngFor="let podcast of podcasts">
+                <div class="row">
+                    <div class="card bg-silver">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4 d-flex justify-content-center align-self-center">
+                                    <a href="#">
+                                        <svg width="73" height="36" viewBox="0 0 73 36" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M41.6919 0.832169V35.3178H52.1027V0.832169H41.6919ZM20.8703 5.14287V31.0071H31.2811V5.14287H20.8703ZM62.5135 9.45357V26.6964H72.9243V9.45357H62.5135ZM0.048645 13.7643V22.3857H10.4595V13.7643H0.048645Z"
+                                                fill="#2C1543" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="col-8">
+                                    <a href="#" class="text-decoration-none text-black">
+                                        <h5 class="card-title ">{{podcast.title}}</h5>
+                                    </a>
+                                    <div class="d-flex flex-row">
+                                        <div class="col-4">
+                                            <label class="fw-bold card-text-sm ">By:</label>
+                                            <span class="card-text px-1 card-text-sm ">{{podcast.author}}</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold card-text-sm">Publish Date:</label>
+                                            <span class="card-text px-1 card-text-sm ">{{podcast.createDate | date: 'dd
+                                                MMM, YYYY'}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row">
+                                        <div class="col-4">
+                                            <label class="fw-bold card-text-sm ">Duration:</label>
+                                            <span class="card-text px-1 card-text-sm ">{{podcast?.duration||0}}
+                                                mins</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <label class="fw-bold card-text-sm ">Ratings:</label>
+                                            <span class="card-text px-1 card-text-sm ">{{podcast?.rating||0}}</span>
+                                            <svg width="20" height="20" viewBox="0 4 30 25" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M15 0L11.25 9.375H0L9.375 15.625L5.625 25L15 18.75L24.375 25L20.625 15.625L30 9.375H18.75L15 0Z"
+                                                    fill="#DFBD0E" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-4"></div>
+        </div>
+
+    </div>
