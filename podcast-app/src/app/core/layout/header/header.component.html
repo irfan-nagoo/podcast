@@ -1,4 +1,4 @@
-<header class="p-3 bg-indigo text-white">
+<header class="p-2 bg-indigo text-white">
   <div class="container">
     <div class="d-flex flex-wrap align-items-start justify-content-start justify-content-lg-start">
 
@@ -27,12 +27,12 @@
       </ul>
 
       <div class="col-6 py-1">
-        <form class="col-7 py-0 bg-indigo-fade rounded-5 border-indigo">
+        <div class="col-7 py-0 bg-indigo-fade rounded-5 border-indigo">
           <div class="input-group">
-            <input type="search" id="search-box" class="form-control form-control-sm text-white border-0 rounded-5"
+            <input type="search" [(ngModel)]="query" id="search-box" class="form-control form-control-sm text-white border-0 rounded-5"
               placeholder="Search..." aria-label="Search">
 
-            <button type="button" class="bg-indigo-fade border-0 rounded-5">
+            <button type="button" class="bg-indigo-fade border-0 rounded-5" [routerLink]="['search']" [queryParams]="{searchQuery: query}">
               <svg width="30" height="30" viewBox="0 0 48 63" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <line x1="0.5" y1="0" x2="0.5" y2="63" stroke="#2C1543" />
                 <path
@@ -40,9 +40,8 @@
                   fill="#2C1543" />
               </svg>
             </button>
-
           </div>
-        </form>
+        </div>
       </div>
 
       <div class="text-end py-1">

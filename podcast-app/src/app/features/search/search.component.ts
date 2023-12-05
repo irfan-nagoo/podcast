@@ -1,24 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Podcast } from '../../core/model/podcast';
 import { PodcastListService } from '../../core/service/podcast-list.service';
-import { SortByType } from '../../shared/constants/poadcast-constants';
+import { SearchType, SortByType } from '../../shared/constants/poadcast-constants';
 import { DataGridComponent } from '../../shared/data-grid/data-grid.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-search',
   standalone: true,
   imports: [DataGridComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.css'
 })
-export class HomeComponent implements OnInit {
+export class SearchComponent implements OnInit {
+
+  searchQuery!: string;
 
   podcasts: Podcast[];
   filterMap: Map<string, string[]>;
   pageNo: number;
   pageSize: number;
 
-  constructor(private podcastListService: PodcastListService) {
+  constructor(private route: ActivatedRoute, private podcastListService: PodcastListService) {
     this.podcasts = [];
     this.filterMap = new Map<string, string[]>();
     this.pageNo = 0;
@@ -26,18 +29,24 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllPodcasts();
+    this.route.queryParams
+      .subscribe(params => {
+        this.pageNo = 0;
+        this.searchQuery = params["searchQuery"];
+        this.searchPodcasts(SearchType.NEW_SEARCH);
+      });
   }
 
-  getAllPodcasts(): void {
-    this.podcastListService.getAllPodcasts(this.filterMap, SortByType.DEFAULT, this.pageNo, this.pageSize)
+  searchPodcasts(searchType: Number): void {
+    this.podcastListService.searchPodcasts(this.filterMap, this.searchQuery, SortByType.DEFAULT, this.pageNo, this.pageSize)
       .subscribe(
-        podcasts => this.podcasts = [...this.podcasts, ...podcasts]);
+        podcasts => this.podcasts = (searchType === SearchType.NEXT_PAGE) ? [...this.podcasts, ...podcasts] : podcasts
+      );
   };
 
 
   onFilterChange(event: any) {
-
+    
     if (event.filterEvent) {
       // update filter map if filter event
       const key = event.filterEvent.target.name;
@@ -54,14 +63,14 @@ export class HomeComponent implements OnInit {
       }
     }
     this.pageNo = 0;
-    this.podcastListService.getAllPodcasts(this.filterMap, event.sortByField, this.pageNo, this.pageSize)
+    this.podcastListService.searchPodcasts(this.filterMap, this.searchQuery, event.sortByField, this.pageNo, this.pageSize)
       .subscribe(
         podcasts => this.podcasts = podcasts);
   }
 
   onScrollDown(event: any) {
     this.pageNo++;
-    this.getAllPodcasts();
+    this.searchPodcasts(SearchType.NEXT_PAGE);
   }
 
 }

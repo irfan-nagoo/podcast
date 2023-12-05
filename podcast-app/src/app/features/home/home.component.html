@@ -2,5 +2,7 @@
   <div class="d-flex align-items-center pb-1 mb-2 mt-2 link-dark text-decoration-none">
     <span class="px-2 fs-5 fw-semibold pb-2">Latest Trends</span>
   </div>
-  <app-data-grid [podcasts]="podcasts"></app-data-grid>
+  <app-data-grid [podcasts]="podcasts" 
+                (filterChangeEvent)="onFilterChange($event)" 
+                (scrollDownEvent)="onScrollDown($event)" ></app-data-grid>
 </div>

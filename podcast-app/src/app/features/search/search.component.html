@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="d-flex align-items-center pb-1 mb-2 mt-2 link-dark text-decoration-none">
+      <span class="px-2 fs-5 fw-semibold pb-2">Showing results for</span>
+      <span class="fs-5 fw-bold pb-2">"{{searchQuery}}"</span>
+    </div>
+    <app-data-grid [podcasts]="podcasts" 
+                  (filterChangeEvent)="onFilterChange($event)" 
+                  (scrollDownEvent)="onScrollDown($event)" ></app-data-grid>
+  </div>

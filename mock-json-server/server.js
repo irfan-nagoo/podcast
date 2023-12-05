@@ -67,6 +67,23 @@ server.put("/podcasts/:id", upload.single("file"), function (req, res) {
     }
 });
 
+//dashboard
+server.get("/static/categories", function (req, res) {
+    res.status(200).json({categories: ["General", "Science", "Software", "Technology"]});
+});
+
+server.get("/static/tags", function (req, res) {
+    res.status(200).json({tags: ["Science", "Software", "Law", "Social"]});
+});
+
+server.get("/static/durations", function (req, res) {
+    res.status(200).json({durations: ["0-5", "5-10", "10 or more"]});
+});
+
+server.get("/static/sort-fields", function (req, res) {
+    res.status(200).json({sortFields: ["Newest", "Most Rated", "Title"]});
+});
+
 
 server.use(router);
 
