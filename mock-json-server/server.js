@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
         callback(null, path.join(__dirname, "/static/audio"));
     },
     filename: function (req, file, callback) {
-        callback(null, randomUUID() + "." + file.mimetype.split("/")[1]);
+        callback(null, randomUUID() + "." + file.originalname.split(".")[1]);
     },
 });
 
@@ -26,7 +26,7 @@ server.use(middleWares);
 const jsonPath = path.join(process.cwd(), './db.json');
 
 server.post("/podcasts", upload.single("file"), function (req, res) {
-    console.log('Creating new Podcast');
+    console.log('POST', req.path);
     const reqJson = JSON.parse(req.body.json);
     const podcasts = jsonDataStore.podcasts;
     reqJson.id = podcasts.length > 0 ? podcasts[podcasts.length - 1].id + 1 : 1;
@@ -41,7 +41,7 @@ server.post("/podcasts", upload.single("file"), function (req, res) {
 });
 
 server.put("/podcasts/:id", upload.single("file"), function (req, res) {
-    console.log('Updating the existing Podcast');
+    console.log('PUT', req.path);
     const reqJson = JSON.parse(req.body.json);
     const podcast = jsonDataStore.podcasts.find(element => element.id === reqJson.id);
     if (podcast) {
@@ -67,7 +67,7 @@ server.put("/podcasts/:id", upload.single("file"), function (req, res) {
     }
 });
 
-//dashboard
+//static
 server.get("/static/categories", function (req, res) {
     res.status(200).json({categories: ["General", "Science", "Software", "Technology"]});
 });
@@ -84,6 +84,14 @@ server.get("/static/sort-fields", function (req, res) {
     res.status(200).json({sortFields: ["Newest", "Most Rated", "Title"]});
 });
 
+//permissions
+server.get("/permission/user-level", function (req, res) {
+    res.status(200).json({permissions: ["Create New Podcast", "Approve Podcasts"]});
+});
+
+server.get("/permission/row-level", function (req, res) {
+    res.status(200).json({permissions: ["Delete Poadcast"]});
+});
 
 server.use(router);
 

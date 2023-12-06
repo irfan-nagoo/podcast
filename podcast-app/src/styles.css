@@ -13,4 +13,11 @@
     border: 1px solid #573479;
 }
 
+.dropdown-fs {
+    font-size: 14px;
+}
   
+.btn-primary {
+    background-color: #2C1543 !important;
+    font-size: 14px !important;
+}

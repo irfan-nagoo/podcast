@@ -13,17 +13,12 @@ import { DataGridComponent } from '../../shared/data-grid/data-grid.component';
 })
 export class HomeComponent implements OnInit {
 
-  podcasts: Podcast[];
-  filterMap: Map<string, string[]>;
-  pageNo: number;
-  pageSize: number;
+  podcasts: Podcast[] = [];
+  filterMap: Map<string, string[]> = new Map<string, string[]>();
+  pageNo: number = 0;
+  pageSize: number = 5;
 
-  constructor(private podcastListService: PodcastListService) {
-    this.podcasts = [];
-    this.filterMap = new Map<string, string[]>();
-    this.pageNo = 0;
-    this.pageSize = 5;
-  }
+  constructor(private podcastListService: PodcastListService) {}
 
   ngOnInit(): void {
     this.getAllPodcasts();

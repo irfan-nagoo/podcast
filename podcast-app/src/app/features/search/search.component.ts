@@ -16,17 +16,12 @@ export class SearchComponent implements OnInit {
 
   searchQuery!: string;
 
-  podcasts: Podcast[];
-  filterMap: Map<string, string[]>;
-  pageNo: number;
-  pageSize: number;
+  podcasts: Podcast[] = [];
+  filterMap: Map<string, string[]> = new Map<string, string[]>();
+  pageNo: number = 0;
+  pageSize: number = 5;
 
-  constructor(private route: ActivatedRoute, private podcastListService: PodcastListService) {
-    this.podcasts = [];
-    this.filterMap = new Map<string, string[]>();
-    this.pageNo = 0;
-    this.pageSize = 5;
-  }
+  constructor(private route: ActivatedRoute, private podcastListService: PodcastListService) { }
 
   ngOnInit(): void {
     this.route.queryParams
@@ -46,7 +41,7 @@ export class SearchComponent implements OnInit {
 
 
   onFilterChange(event: any) {
-    
+
     if (event.filterEvent) {
       // update filter map if filter event
       const key = event.filterEvent.target.name;

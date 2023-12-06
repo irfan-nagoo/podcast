@@ -20,7 +20,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li *ngFor="let sortField of sortFields">
-                    <a class="dropdown-item" href="#" (click)="toggleSortBy($event)">{{sortField}}</a>
+                    <a class="dropdown-item dropdown-fs" (click)="toggleSortBy($event)">{{sortField}}</a>
                 </li>
             </ul>
         </div>
@@ -114,8 +114,7 @@
                                             <div class="col-4">
                                                 <label class="fw-bold card-text-sm">Publish Date:</label>
                                                 <span class="card-text px-1 card-text-sm ">{{podcast.createDate | date:
-                                                    'dd
-                                                    MMM, YYYY'}}</span>
+                                                    'dd MMM, YYYY'}}</span>
                                             </div>
                                         </div>
                                         <div class="d-flex flex-row">

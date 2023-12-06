@@ -86,18 +86,37 @@
       "uri": "/audio/bc3059f1-22b7-4788-9a6f-0270d4e66eb1.svg+xml"
     },
     {
-      "title": "An interview with Hollywood actor",
-      "descrption": "This podcast is about new biotechnology advancement",
-      "author": "Tim Pets",
+      "title": "New podcast on global warming",
+      "description": "This podcast is about global warming",
       "category": "General",
-      "tags": [
-        "General",
-        "Movies"
-      ],
-      "createDate": "2023-12-05T09:02:35.356Z",
-      "modifiedDate": "2023-12-05T09:13:32.417Z",
+      "author": "Mike Jones",
+      "tags": "Software",
       "id": 7,
-      "uri": "/audio/bc3059f1-22b7-4788-9a6f-0270d4e66eb1.svg+xml"
+      "uri": "/audio/3765c513-7310-432b-b69f-263f5c79e253.mp3",
+      "createDate": "2023-12-06T15:49:35.842Z",
+      "modifiedDate": "2023-12-06T15:49:35.842Z"
+    },
+    {
+      "title": "New Podcast on poltical affairs",
+      "description": "The podcast on political affairs",
+      "category": "Software",
+      "author": "Mike Jones",
+      "tags": "Political",
+      "id": 8,
+      "uri": "/audio/affcd96c-c714-4c2b-8c85-e2503682c149.mp3",
+      "createDate": "2023-12-06T16:02:45.864Z",
+      "modifiedDate": "2023-12-06T16:02:45.864Z"
+    },
+    {
+      "title": "New podcast on environment change",
+      "description": "The pod cast on environment change",
+      "category": "Science",
+      "author": "John Wills",
+      "tags": "Environment",
+      "id": 9,
+      "uri": "/audio/837fa9f9-5e9d-459e-bad2-d48167e18363.mp3",
+      "createDate": "2023-12-06T16:36:31.078Z",
+      "modifiedDate": "2023-12-06T16:36:31.078Z"
     }
   ]
 }

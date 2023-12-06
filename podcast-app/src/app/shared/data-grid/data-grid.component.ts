@@ -15,29 +15,18 @@ export class DataGridComponent implements OnInit {
 
   @Input() podcasts!: Podcast[];
 
-  @Output() filterChangeEvent: EventEmitter<any>;
+  @Output() filterChangeEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() scrollDownEvent: EventEmitter<any>;
+  @Output() scrollDownEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  categories: string[];
-  tags: string[];
-  durations: string[];
-  sortFields: string[];
-  showFilterBy: boolean;
-  selectedSortBy: string;
+  categories: string[] = [];
+  tags: string[] = [];
+  durations: string[] = [];
+  sortFields: string[] = [];
+  showFilterBy: boolean = false;
+  selectedSortBy: string = "Newest";
 
-
-  constructor(private staticService: StaticService) {
-    this.categories = [];
-    this.tags = [];
-    this.durations = [];
-    this.sortFields = [];
-    this.showFilterBy = false;
-    this.selectedSortBy = "Newest";
-    // event emitters
-    this.filterChangeEvent = new EventEmitter<any>();
-    this.scrollDownEvent = new EventEmitter<any>();
-  }
+  constructor(private staticService: StaticService) { }
 
   ngOnInit(): void {
     this.getCategories();

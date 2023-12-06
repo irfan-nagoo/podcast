@@ -10,3 +10,8 @@ export enum SearchType {
     NEXT_PAGE = 1,
     NEW_SEARCH
 }
+
+export enum UserActionType {
+    CREATE = "Create New Podcast",
+    APPROVE = "Approve Podcasts"
+}
