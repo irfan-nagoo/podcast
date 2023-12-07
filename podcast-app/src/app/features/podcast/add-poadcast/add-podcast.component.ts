@@ -1,37 +1,37 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageBroadcasterService } from '../../../core/service/message-broadcaster.service';
 import { PodcastService } from '../../../core/service/podcast.service';
-import { MessageComponent } from '../../../shared/message/message.component';
+import { StaticService } from '../../../core/service/static.service';
+import { PODCAST_ADDED_ERROR, PODCAST_ADDED_SUCCESS, PodcastActionType, ResponseStatusType } from '../../../shared/constants/poadcast-constants';
 
 @Component({
-  selector: 'app-podcast',
+  selector: 'app-add-podcast',
   standalone: true,
-  imports: [MessageComponent, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-podcast.component.html',
   styleUrl: './add-podcast.component.css'
 })
 export class AddPodcastComponent implements OnInit {
 
-  message: any = {
-    level: "",
-    text: ""
-  };
+  audioFile: Blob = new Blob;
+  addPodCastForm: FormGroup = this.formBuilder.group({
+    title: '',
+    description: '',
+    category: '',
+    author: '',
+    tags: ''
+  });;
+  categories: string[] = [];
 
-  audioFile: Blob
-  addPodCastForm: any;
-
-  constructor(private router: Router, private podcastService: PodcastService, private formBuilder: FormBuilder) { }
+  constructor(private podcastService: PodcastService, private formBuilder: FormBuilder,
+    private messageBroadcaster: MessageBroadcasterService, private staticService: StaticService,
+    public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.addPodCastForm = this.formBuilder.group({
-      title: '',
-      description: '',
-      category: '',
-      author: '',
-      tags: '',
-      file: ''
-    });
+    this.getCategories();
   }
 
   onFileChange(event: any) {
@@ -40,14 +40,37 @@ export class AddPodcastComponent implements OnInit {
 
   onSubmit(): void {
     const formData = new FormData();
-    this.addPodCastForm.removeControl('file');
     formData.append('json', JSON.stringify(this.addPodCastForm.value));
     formData.append('file', this.audioFile);
     // POST
     this.podcastService.addPodcast(formData)
-      .subscribe(error => console.log(error));
+      .subscribe(podcast => {
+        if (podcast.title) {
+          console.info(podcast);
+          this.messageBroadcaster.sendMessage({
+            action: PodcastActionType.CREATE,
+            status: ResponseStatusType.SUCCESS,
+            text: PODCAST_ADDED_SUCCESS,
+            content: podcast
+          });
+        } else {
+          console.error(podcast);
+          this.messageBroadcaster.sendMessage({
+            action: PodcastActionType.CREATE,
+            status: ResponseStatusType.ERROR,
+            text: PODCAST_ADDED_ERROR,
+            content: podcast
+          });
+        }
+      });
 
-    this.router.navigate(['/']);
+    this.activeModal.close();
+
+  }
+
+  getCategories() {
+    this.staticService.getCategories()
+    .subscribe(json => this.categories = json.categories);
   }
 
 }

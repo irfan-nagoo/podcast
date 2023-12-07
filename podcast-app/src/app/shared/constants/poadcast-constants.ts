@@ -15,3 +15,20 @@ export enum UserActionType {
     CREATE = "Create New Podcast",
     APPROVE = "Approve Podcasts"
 }
+
+export enum PodcastActionType {
+    CREATE = 1,
+    MODIFY,
+    DELETE
+}
+
+export enum ResponseStatusType {
+    SUCCESS = 1,
+    ERROR
+}
+
+
+// Messages
+
+export const PODCAST_ADDED_SUCCESS = "Podcast added successfully";
+export const PODCAST_ADDED_ERROR = "Error occured while adding Podcast"

@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { APP_INITIALIZER } from '@angular/core';
 import { ConfigService } from './core/service/config.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { routes } from './app.routes';
 
@@ -17,5 +18,5 @@ export const appConfig: ApplicationConfig = {
         return configService.loadConfig();
       };
     }
-  }]
+  }, NgbActiveModal ]
 };

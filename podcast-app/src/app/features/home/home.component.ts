@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Podcast } from '../../core/model/podcast';
+import { MessageBroadcasterService } from '../../core/service/message-broadcaster.service';
 import { PodcastListService } from '../../core/service/podcast-list.service';
-import { SortByType } from '../../shared/constants/poadcast-constants';
+import { PodcastActionType, SortByType } from '../../shared/constants/poadcast-constants';
 import { DataGridComponent } from '../../shared/data-grid/data-grid.component';
+import { MessageComponent } from '../../shared/message/message.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [DataGridComponent],
+  imports: [DataGridComponent, MessageComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -17,11 +19,16 @@ export class HomeComponent implements OnInit {
   filterMap: Map<string, string[]> = new Map<string, string[]>();
   pageNo: number = 0;
   pageSize: number = 5;
+  message: any = {
+    status: "",
+    text: ""
+  };
 
-  constructor(private podcastListService: PodcastListService) {}
+  constructor(private podcastListService: PodcastListService, private messageBroadcaster: MessageBroadcasterService) {}
 
   ngOnInit(): void {
     this.getAllPodcasts();
+    this.subscribeToUpdates();
   }
 
   getAllPodcasts(): void {
@@ -57,6 +64,23 @@ export class HomeComponent implements OnInit {
   onScrollDown(event: any) {
     this.pageNo++;
     this.getAllPodcasts();
+  }
+
+  subscribeToUpdates() {
+    this.messageBroadcaster.recieveMessage().subscribe(message => {
+      switch(message.action) {
+        case PodcastActionType.CREATE:
+          this.podcasts.unshift(message.content);
+          break;
+        case PodcastActionType.MODIFY:
+          //
+          break;
+        case PodcastActionType.DELETE:
+          //
+          break;
+      }
+      
+    });
   }
 
 }

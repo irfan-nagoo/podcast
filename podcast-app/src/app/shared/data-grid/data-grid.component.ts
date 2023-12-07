@@ -15,9 +15,9 @@ export class DataGridComponent implements OnInit {
 
   @Input() podcasts!: Podcast[];
 
-  @Output() filterChangeEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() filterChangeEvent: EventEmitter<any> = new EventEmitter();
 
-  @Output() scrollDownEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() scrollDownEvent: EventEmitter<any> = new EventEmitter();
 
   categories: string[] = [];
   tags: string[] = [];
