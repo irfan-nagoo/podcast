@@ -6,11 +6,13 @@ import { UserActionType } from '../../../shared/constants/poadcast-constants';
 import { PermissionService } from '../../service/permission.service';
 import { AddPodcastComponent } from '../../../features/podcast/add-poadcast/add-podcast.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageComponent } from '../../../shared/message/message.component';
+import { MessageBroadcasterService } from '../../service/message-broadcaster.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, FormsModule, CommonModule, AddPodcastComponent],
+  imports: [RouterModule, FormsModule, CommonModule, AddPodcastComponent, MessageComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -18,10 +20,16 @@ export class HeaderComponent implements OnInit {
 
   query: string = '';
   userLevelPermissions: string[] = [];
+  message: any = {
+    status: "",
+    text: ""
+  };
 
-  constructor(private router: Router, private permissionService: PermissionService, private modalService: NgbModal) { }
+  constructor(private router: Router, private permissionService: PermissionService,
+    private messageBroadcaster: MessageBroadcasterService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.subscribeToUpdates();
     this.getUserLevelPermissions();
   }
 
@@ -47,6 +55,13 @@ export class HeaderComponent implements OnInit {
       //
     }
   }
+
+  subscribeToUpdates() {
+    this.messageBroadcaster.recieveMessage()
+      .subscribe(
+        message => this.message = message
+      )
+  };
 
 
 }

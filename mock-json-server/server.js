@@ -72,9 +72,6 @@ server.get("/static/categories", function (req, res) {
     res.status(200).json({categories: ["General", "Science", "Software", "Technology"]});
 });
 
-server.get("/static/tags", function (req, res) {
-    res.status(200).json({tags: ["Science", "Software", "Law", "Social"]});
-});
 
 server.get("/static/durations", function (req, res) {
     res.status(200).json({durations: ["0-5", "5-10", "10 or more"]});

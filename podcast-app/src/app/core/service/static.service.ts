@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
+import { ErrorHandlerService } from '../../shared/error/error-handler.service';
 import { ConfigService } from './config.service';
 
 @Injectable({
@@ -8,21 +9,34 @@ import { ConfigService } from './config.service';
 })
 export class StaticService {
 
-  constructor(private httpClient: HttpClient, private configService: ConfigService) { }
+  constructor(private httpClient: HttpClient, private configService: ConfigService,
+    private errorHandler: ErrorHandlerService) { }
 
   getCategories(): Observable<any> {
-    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/categories`);
+    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/categories`)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );
   }
 
   getTags(): Observable<any> {
-    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/tags`);
+    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/tags`)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );
   }
 
   getDurations(): Observable<any> {
-    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/durations`);
+    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/durations`)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );
   }
 
   getSortFields(): Observable<any> {
-    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/sort-fields`);
+    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/static/sort-fields`)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );
   }
 }

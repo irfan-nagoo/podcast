@@ -15,4 +15,11 @@ export class MessageComponent {
   constructor() {
   }
 
+  onClose(){
+    this.message = {
+      status: "",
+      text: ""
+    };
+  }
+
 }

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { SortByType } from '../../shared/constants/poadcast-constants';
-import { Podcast } from '../model/podcast';
+import { ErrorHandlerService } from '../../shared/error/error-handler.service';
 import { ConfigService } from './config.service';
 
 @Injectable({
@@ -10,31 +10,46 @@ import { ConfigService } from './config.service';
 })
 export class PodcastListService {
 
-  constructor(private httpClient: HttpClient, private configService: ConfigService) { }
+  constructor(private httpClient: HttpClient, private configService: ConfigService,
+    private errorHandler: ErrorHandlerService) { }
 
-  getAllPodcasts(filterMap: Map<string, string[]>, sortBy: string, pageNo: number, pageSize: number): Observable<Podcast[]> {
+  getAllPodcasts<T>(filterMap: Map<string, string[]>, sortBy: string, pageNo: number,
+    pageSize: number): Observable<T> {
     const sortByUri = this.getSortByUri(sortBy);
     const pageUri = this.getPageUri(pageNo, pageSize);
     if (filterMap.size === 0) {
-      return this.httpClient.get<Podcast[]>
-        (`${this.configService.getApiBaseUrl()}/podcasts?${sortByUri}&${pageUri}`);
+      return this.httpClient.get<T>
+        (`${this.configService.getApiBaseUrl()}/podcasts?${sortByUri}&${pageUri}`)
+        .pipe(
+          catchError(this.errorHandler.handleError)
+        );
     } else {
-      
-      return this.httpClient.get<Podcast[]>
-        (`${this.configService.getApiBaseUrl()}/podcasts?${this.getFilterUri(filterMap)}&${sortByUri}&${pageUri}`);
+
+      return this.httpClient.get<T>
+        (`${this.configService.getApiBaseUrl()}/podcasts?${this.getFilterUri(filterMap)}&${sortByUri}&${pageUri}`)
+        .pipe(
+          catchError(this.errorHandler.handleError)
+        );
     }
   }
 
-  searchPodcasts(filterMap: Map<string, string[]>, searchQuery: string, sortBy: string, pageNo: number, pageSize: number): Observable<Podcast[]> {
+  searchPodcasts<T>(filterMap: Map<string, string[]>, searchQuery: string, sortBy: string, pageNo: number,
+    pageSize: number): Observable<T> {
     const sortByUri = this.getSortByUri(sortBy);
     const pageUri = this.getPageUri(pageNo, pageSize);
     if (filterMap.size === 0) {
-      return this.httpClient.get<Podcast[]>
-        (`${this.configService.getApiBaseUrl()}/podcasts?q=${searchQuery}&${sortByUri}&${pageUri}`);
+      return this.httpClient.get<T>
+        (`${this.configService.getApiBaseUrl()}/podcasts?q=${searchQuery}&${sortByUri}&${pageUri}`)
+        .pipe(
+          catchError(this.errorHandler.handleError)
+        );
     } else {
-      
-      return this.httpClient.get<Podcast[]>
-        (`${this.configService.getApiBaseUrl()}/podcasts?q=${searchQuery}&${this.getFilterUri(filterMap)}&${sortByUri}&${pageUri}`);
+
+      return this.httpClient.get<T>
+        (`${this.configService.getApiBaseUrl()}/podcasts?q=${searchQuery}&${this.getFilterUri(filterMap)}&${sortByUri}&${pageUri}`)
+        .pipe(
+          catchError(this.errorHandler.handleError)
+        );
     }
   }
 
@@ -42,7 +57,19 @@ export class PodcastListService {
     let filterUri = '';
     filterMap.forEach((value, key) => {
       value.forEach(v => {
-        filterUri = filterUri + "&" + key + "=" + v;
+        // backend specific logic for duration
+        if (key === "duration") {
+          var valArr = v.split("-");
+          if (valArr.length == 1) {
+            valArr[0] = "10";
+            filterUri = filterUri + "&" + key + "_gte=" + valArr[0];
+          } else {
+            filterUri = filterUri + "&" + key + "_gte=" + valArr[0];
+            filterUri = filterUri + "&" + key + "_lte=" + valArr[1]; 
+          }
+        } else {
+          filterUri = filterUri + "&" + key + "=" + v;
+        }
       })
     });
     return filterUri;

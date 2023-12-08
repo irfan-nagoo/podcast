@@ -31,4 +31,5 @@ export enum ResponseStatusType {
 // Messages
 
 export const PODCAST_ADDED_SUCCESS = "Podcast added successfully";
-export const PODCAST_ADDED_ERROR = "Error occured while adding Podcast"
+export const PODCAST_ADDED_ERROR = "An error has occured while adding Podcast. Please try again later."
+export const API_INVOCATION_ERROR = "An error has occured while fetching data. Please try again later.";

@@ -1,51 +1,65 @@
-<div class="modal-header bg-indigo text-white">
-    <h5 class="modal-title ">Create New Podcast</h5>
-    <button type="button" (click)="activeModal.dismiss('Cross click')" class="btn-close" data-bs-dismiss="modal"
-        aria-label="Close"></button>
-</div>
+<div class="modal-form-font">
+    <div class="modal-header bg-indigo text-white">
+        <h5 class="modal-title modal-title-font">Create New Podcast</h5>
+        <button type="button" (click)="activeModal.dismiss('Cross click')" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+    </div>
 
-<form class="px-2 mb-5 was-validated" [formGroup]="addPodCastForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-    <div class="modal-body">
-        <div class="mb-3">
-            <label for="title" class="form-label fw-bold">Title</label>
-            <input type="text" class="form-control" id="title" formControlName="title" required>
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-label fw-bold">Description</label>
-            <textarea class="form-control py-3 form-content" id="description" formControlName="description"
-                required></textarea>
-        </div>
-        <div class="d-flex justify-content-between mb-3 col-12">
-            <div class="mb-3 col-5">
-                <label for="category" class="form-label fw-bold">Category</label>
-                <select class="form-select" aria-label="Default select example" id="category" formControlName="category"
-                    required>
-                    <option [defaultSelected]=true value="">Select category</option>
-                    <option *ngFor="let category of categories" [value]="category">
-                        {{category}}
-                    </option>
-                </select>
+    <form class="px-2 mb-5 was-validated" [formGroup]="addPodCastForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="title" class="form-label fw-bold form-required">Title</label>
+                <input type="text" class="form-control" id="title" formControlName="title" required>
             </div>
-            <div class="mb-3 col-5">
-                <label for="author" class="form-label fw-bold">Author</label>
-                <input type="text" class="form-control" id="author" formControlName="author" required>
+            <div class="mb-3">
+                <label for="description" class="form-label fw-bold form-required">Description</label>
+                <textarea class="form-control py-3 form-content" id="description" formControlName="description"
+                    required></textarea>
+            </div>
+            <div class="d-flex justify-content-between mb-3 col-12">
+                <div class="mb-3 col-5">
+                    <label for="category" class="form-label fw-bold form-required">Category</label>
+                    <select class="form-select" aria-label="Default select example" id="category"
+                        formControlName="category" required>
+                        <option [defaultSelected]=true value="">Select category</option>
+                        <option *ngFor="let category of categories" [value]="category">
+                            {{category}}
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3 col-5">
+                    <label for="author" class="form-label fw-bold form-required">Author</label>
+                    <input type="text" class="form-control" id="author" formControlName="author" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="tags" class="form-label fw-bold">Tags</label>
+                <div class="d-flex">
+                    <input type="text" (keyup)="onTagKeyup($event)" (keydown.enter)="onTagEnter($event)" list="tag-list"
+                        class="form-control" id="tags" formControlName="tags">
+                    <datalist id="tag-list">
+                        <option *ngFor="let tag of tags">{{tag}}</option>
+                    </datalist>
+                </div>
+                <div id="emailHelp" class="form-text">This is an auto complete field. Start typing and press enter</div>
+                <div class="d-flex flex-wrap py-3">
+                    <div *ngFor="let tag of selectedTags" class="py-1 ms-1 mt-2 rounded-pill bg-pill">
+                        <span class="p-2 ms-1">{{tag}}</span>
+                        <button type="button" (click)="onTagCancel(tag)" class="btn-close"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="file" class="form-label fw-bold form-required">Audio File</label>
+                <input type="file" class="form-control" id="file" (change)="onFileChange($event)" required>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="tags" class="form-label fw-bold">Tags</label>
-            <input type="text" class="form-control" id="tags" formControlName="tags" required>
+        <div class="modal-footer">
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary border-0 rounded-5 me-2">Submit</button>
+                <a type="button" (click)="activeModal.close('Close click')"
+                    class="btn btn-primary border-0 rounded-5">Cancel</a>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="file" class="form-label fw-bold">Audio File</label>
-            <input type="file" class="form-control" id="file" (change)="onFileChange($event)"
-                required>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary border-0 rounded-5 me-2">Submit</button>
-            <a type="button" (click)="activeModal.close('Close click')"
-                class="btn btn-primary border-0 rounded-5">Cancel</a>
-        </div>
-    </div>
-</form>
+    </form>
+</div>

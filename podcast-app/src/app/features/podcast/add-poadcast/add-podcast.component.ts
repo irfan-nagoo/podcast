@@ -5,6 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageBroadcasterService } from '../../../core/service/message-broadcaster.service';
 import { PodcastService } from '../../../core/service/podcast.service';
 import { StaticService } from '../../../core/service/static.service';
+import { TagsService } from '../../../core/service/tags.service';
 import { PODCAST_ADDED_ERROR, PODCAST_ADDED_SUCCESS, PodcastActionType, ResponseStatusType } from '../../../shared/constants/poadcast-constants';
 
 @Component({
@@ -16,19 +17,23 @@ import { PODCAST_ADDED_ERROR, PODCAST_ADDED_SUCCESS, PodcastActionType, Response
 })
 export class AddPodcastComponent implements OnInit {
 
-  audioFile: Blob = new Blob;
+  audioFile: Blob = new Blob();
+  audioDuration: number = 0;
   addPodCastForm: FormGroup = this.formBuilder.group({
     title: '',
     description: '',
     category: '',
     author: '',
-    tags: ''
+    tags: '',
+    duration: ''
   });;
   categories: string[] = [];
+  tags: string[] = [];
+  selectedTags: string[] = [];
 
   constructor(private podcastService: PodcastService, private formBuilder: FormBuilder,
     private messageBroadcaster: MessageBroadcasterService, private staticService: StaticService,
-    public activeModal: NgbActiveModal) { }
+    private tagsService: TagsService, public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -36,17 +41,24 @@ export class AddPodcastComponent implements OnInit {
 
   onFileChange(event: any) {
     this.audioFile = event.target.files[0];
+    var url = URL.createObjectURL(this.audioFile);
+    var audio = new Audio(url);
+    audio.addEventListener("loadedmetadata", (e) => {
+      this.addPodCastForm.value.duration = (audio.duration) / 60;
+      URL.revokeObjectURL(audio.src);
+    });
   }
 
   onSubmit(): void {
+    this.addPodCastForm.value.tags = this.selectedTags;
     const formData = new FormData();
     formData.append('json', JSON.stringify(this.addPodCastForm.value));
     formData.append('file', this.audioFile);
+
     // POST
-    this.podcastService.addPodcast(formData)
+    this.podcastService.addPodcast<any>(formData)
       .subscribe(podcast => {
         if (podcast.title) {
-          console.info(podcast);
           this.messageBroadcaster.sendMessage({
             action: PodcastActionType.CREATE,
             status: ResponseStatusType.SUCCESS,
@@ -54,12 +66,9 @@ export class AddPodcastComponent implements OnInit {
             content: podcast
           });
         } else {
-          console.error(podcast);
           this.messageBroadcaster.sendMessage({
-            action: PodcastActionType.CREATE,
-            status: ResponseStatusType.ERROR,
-            text: PODCAST_ADDED_ERROR,
-            content: podcast
+            status: podcast.status,
+            text: PODCAST_ADDED_ERROR
           });
         }
       });
@@ -70,7 +79,25 @@ export class AddPodcastComponent implements OnInit {
 
   getCategories() {
     this.staticService.getCategories()
-    .subscribe(json => this.categories = json.categories);
+      .subscribe(json => this.categories = json.categories);
+  }
+
+  onTagKeyup(event: any) {
+    this.tagsService.searchTags(event.target.value)
+      .subscribe(json => {
+        if (json.length >= 0) {
+          this.tags = json.map((e: { name: string; }) => e.name);
+        }
+      });
+  }
+
+  onTagEnter(event: any) {
+    this.selectedTags.push(event.target.value);
+    event.target.value = "";
+  }
+
+  onTagCancel(tag: any) {
+    this.selectedTags = this.selectedTags.filter(e => e !== tag);
   }
 
 }

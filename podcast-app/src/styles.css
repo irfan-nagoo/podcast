@@ -21,3 +21,17 @@
     background-color: #2C1543 !important;
     font-size: 14px !important;
 }
+
+.form-required:after {
+    content: "*";
+    color: red;
+}
+
+.modal-title-font {
+    font-size: 17px;
+}
+
+.modal-form-font {
+    font-size: 13px;
+}
+

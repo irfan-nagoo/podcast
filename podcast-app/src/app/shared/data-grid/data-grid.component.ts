@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { Podcast } from '../../core/model/podcast';
 import { StaticService } from '../../core/service/static.service';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { TagsService } from '../../core/service/tags.service';
 
 @Component({
   selector: 'app-data-grid',
@@ -26,7 +27,7 @@ export class DataGridComponent implements OnInit {
   showFilterBy: boolean = false;
   selectedSortBy: string = "Newest";
 
-  constructor(private staticService: StaticService) { }
+  constructor(private staticService: StaticService, private tagsService: TagsService) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -53,7 +54,11 @@ export class DataGridComponent implements OnInit {
   }
 
   getTags() {
-    this.staticService.getTags().subscribe(json => this.tags = json.tags);
+    this.tagsService.getTags().subscribe(json => {
+      if (json.length >= 0) {
+        this.tags = json.map((e: { name: string; }) => e.name);
+      }
+    });
   }
 
   getDurations() {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Podcast } from '../../core/model/podcast';
 import { MessageBroadcasterService } from '../../core/service/message-broadcaster.service';
 import { PodcastListService } from '../../core/service/podcast-list.service';
-import { PodcastActionType, SortByType } from '../../shared/constants/poadcast-constants';
+import { API_INVOCATION_ERROR, PodcastActionType, ResponseStatusType, SortByType } from '../../shared/constants/poadcast-constants';
 import { DataGridComponent } from '../../shared/data-grid/data-grid.component';
 import { MessageComponent } from '../../shared/message/message.component';
 
@@ -19,22 +19,27 @@ export class HomeComponent implements OnInit {
   filterMap: Map<string, string[]> = new Map<string, string[]>();
   pageNo: number = 0;
   pageSize: number = 5;
-  message: any = {
-    status: "",
-    text: ""
-  };
 
-  constructor(private podcastListService: PodcastListService, private messageBroadcaster: MessageBroadcasterService) {}
+  constructor(private podcastListService: PodcastListService, private messageBroadcaster: MessageBroadcasterService) { }
 
   ngOnInit(): void {
-    this.getAllPodcasts();
     this.subscribeToUpdates();
+    this.getAllPodcasts();
   }
 
+
   getAllPodcasts(): void {
-    this.podcastListService.getAllPodcasts(this.filterMap, SortByType.DEFAULT, this.pageNo, this.pageSize)
-      .subscribe(
-        podcasts => this.podcasts = [...this.podcasts, ...podcasts]);
+    this.podcastListService.getAllPodcasts<any>(this.filterMap, SortByType.DEFAULT, this.pageNo, this.pageSize)
+      .subscribe(podcasts => {
+        if (podcasts.length >= 0) {
+          this.podcasts = [...this.podcasts, ...podcasts];
+        } else {
+          this.messageBroadcaster.sendMessage({
+            status: podcasts.status,
+            text: API_INVOCATION_ERROR
+          });
+        }
+      });
   };
 
 
@@ -56,9 +61,19 @@ export class HomeComponent implements OnInit {
       }
     }
     this.pageNo = 0;
-    this.podcastListService.getAllPodcasts(this.filterMap, event.sortByField, this.pageNo, this.pageSize)
+    this.podcastListService.getAllPodcasts<any>(this.filterMap, event.sortByField, this.pageNo, this.pageSize)
       .subscribe(
-        podcasts => this.podcasts = podcasts);
+        podcasts => {
+          if (podcasts.length >= 0) {
+            this.podcasts = podcasts;
+          } else {
+            this.messageBroadcaster.sendMessage({
+              status: podcasts.status,
+              text: API_INVOCATION_ERROR
+            });
+          }
+        }
+      );
   }
 
   onScrollDown(event: any) {
@@ -68,18 +83,19 @@ export class HomeComponent implements OnInit {
 
   subscribeToUpdates() {
     this.messageBroadcaster.recieveMessage().subscribe(message => {
-      switch(message.action) {
-        case PodcastActionType.CREATE:
-          this.podcasts.unshift(message.content);
-          break;
-        case PodcastActionType.MODIFY:
-          //
-          break;
-        case PodcastActionType.DELETE:
-          //
-          break;
+      if (message.status !== ResponseStatusType.ERROR) {
+        switch (message.action) {
+          case PodcastActionType.CREATE:
+            this.podcasts.unshift(message.content);
+            break;
+          case PodcastActionType.MODIFY:
+            //
+            break;
+          case PodcastActionType.DELETE:
+            //
+            break;
+        }
       }
-      
     });
   }
 

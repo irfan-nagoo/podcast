@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Podcast } from '../../core/model/podcast';
+import { MessageBroadcasterService } from '../../core/service/message-broadcaster.service';
 import { PodcastListService } from '../../core/service/podcast-list.service';
 import { SearchType, SortByType } from '../../shared/constants/poadcast-constants';
 import { DataGridComponent } from '../../shared/data-grid/data-grid.component';
+import { MessageComponent } from '../../shared/message/message.component';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [DataGridComponent],
+  imports: [DataGridComponent, MessageComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
@@ -21,7 +23,8 @@ export class SearchComponent implements OnInit {
   pageNo: number = 0;
   pageSize: number = 5;
 
-  constructor(private route: ActivatedRoute, private podcastListService: PodcastListService) { }
+  constructor(private route: ActivatedRoute, private podcastListService: PodcastListService,
+    private messageBroadcaster: MessageBroadcasterService) { }
 
   ngOnInit(): void {
     this.route.queryParams
@@ -33,7 +36,7 @@ export class SearchComponent implements OnInit {
   }
 
   searchPodcasts(searchType: Number): void {
-    this.podcastListService.searchPodcasts(this.filterMap, this.searchQuery, SortByType.DEFAULT, this.pageNo, this.pageSize)
+    this.podcastListService.searchPodcasts<any>(this.filterMap, this.searchQuery, SortByType.DEFAULT, this.pageNo, this.pageSize)
       .subscribe(
         podcasts => this.podcasts = (searchType === SearchType.NEXT_PAGE) ? [...this.podcasts, ...podcasts] : podcasts
       );
@@ -58,9 +61,10 @@ export class SearchComponent implements OnInit {
       }
     }
     this.pageNo = 0;
-    this.podcastListService.searchPodcasts(this.filterMap, this.searchQuery, event.sortByField, this.pageNo, this.pageSize)
+    this.podcastListService.searchPodcasts<any>(this.filterMap, this.searchQuery, event.sortByField, this.pageNo, this.pageSize)
       .subscribe(
-        podcasts => this.podcasts = podcasts);
+        podcasts => this.podcasts = podcasts
+      );
   }
 
   onScrollDown(event: any) {

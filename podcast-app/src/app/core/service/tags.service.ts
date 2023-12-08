@@ -7,20 +7,20 @@ import { ConfigService } from './config.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PermissionService {
+export class TagsService {
 
   constructor(private httpClient: HttpClient, private configService: ConfigService,
     private errorHandler: ErrorHandlerService) { }
 
-  getUserLevelPermissions(): Observable<any> {
-    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/permission/user-level`)
+  getTags(): Observable<any> {
+    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/tags`)
       .pipe(
         catchError(this.errorHandler.handleError)
       );
   }
 
-  getRowLevelPermissions(): Observable<any> {
-    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/permission/row-level`)
+  searchTags(query: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.configService.getApiBaseUrl()}/tags?q=${query}`)
       .pipe(
         catchError(this.errorHandler.handleError)
       );
