@@ -88,57 +88,57 @@
             <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
                 (scrolled)="onScroll()">
                 <div *ngFor="let podcast of podcasts">
-                    <div class="row">
-                        <div class="card bg-silver">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4 d-flex justify-content-center align-self-center">
-                                        <a href="#">
+                    <a (click)="onRecordClick(podcast.id)">
+                        <div class="row">
+                            <div class="card bg-silver">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-self-center">
                                             <svg width="73" height="36" viewBox="0 0 73 36" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M41.6919 0.832169V35.3178H52.1027V0.832169H41.6919ZM20.8703 5.14287V31.0071H31.2811V5.14287H20.8703ZM62.5135 9.45357V26.6964H72.9243V9.45357H62.5135ZM0.048645 13.7643V22.3857H10.4595V13.7643H0.048645Z"
                                                     fill="#2C1543" />
                                             </svg>
-                                        </a>
-                                    </div>
-                                    <div class="col-8">
-                                        <a href="#" class="text-decoration-none text-black">
-                                            <h5 class="card-title ">{{podcast.title}}</h5>
-                                        </a>
-                                        <div class="d-flex flex-row">
-                                            <div class="col-4">
-                                                <label class="fw-bold card-text-sm ">By:</label>
-                                                <span class="card-text px-1 card-text-sm ">{{podcast.author}}</span>
-                                            </div>
-                                            <div class="col-4">
-                                                <label class="fw-bold card-text-sm">Publish Date:</label>
-                                                <span class="card-text px-1 card-text-sm ">{{podcast.createDate | date:
-                                                    'dd MMM, YYYY'}}</span>
-                                            </div>
                                         </div>
-                                        <div class="d-flex flex-row">
-                                            <div class="col-4">
-                                                <label class="fw-bold card-text-sm ">Duration:</label>
-                                                <span class="card-text px-1 card-text-sm ">{{podcast?.duration||0}}
-                                                    mins</span>
+                                        <div class="col-8">
+                                            <h5 class="card-title ">{{podcast.title}}</h5>
+                                            <div class="d-flex flex-row">
+                                                <div class="col-4">
+                                                    <label class="fw-bold card-text-sm ">By:</label>
+                                                    <span class="card-text px-1 card-text-sm ">{{podcast.author}}</span>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="fw-bold card-text-sm">Publish Date:</label>
+                                                    <span class="card-text px-1 card-text-sm ">{{podcast.createDate |
+                                                        date:
+                                                        'dd MMM, YYYY'}}</span>
+                                                </div>
                                             </div>
-                                            <div class="col-4">
-                                                <label class="fw-bold card-text-sm ">Ratings:</label>
-                                                <span class="card-text px-1 card-text-sm ">{{podcast?.rating||0}}</span>
-                                                <svg width="20" height="20" viewBox="0 4 30 25" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M15 0L11.25 9.375H0L9.375 15.625L5.625 25L15 18.75L24.375 25L20.625 15.625L30 9.375H18.75L15 0Z"
-                                                        fill="#DFBD0E" />
-                                                </svg>
+                                            <div class="d-flex flex-row">
+                                                <div class="col-4">
+                                                    <label class="fw-bold card-text-sm ">Duration:</label>
+                                                    <span class="card-text px-1 card-text-sm ">{{podcast?.duration||0}}
+                                                        mins</span>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="fw-bold card-text-sm ">Ratings:</label>
+                                                    <span
+                                                        class="card-text px-1 card-text-sm ">{{podcast?.rating||0}}</span>
+                                                    <svg width="20" height="20" viewBox="0 4 30 25" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M15 0L11.25 9.375H0L9.375 15.625L5.625 25L15 18.75L24.375 25L20.625 15.625L30 9.375H18.75L15 0Z"
+                                                            fill="#DFBD0E" />
+                                                    </svg>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 

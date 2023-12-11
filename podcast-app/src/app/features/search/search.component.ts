@@ -20,6 +20,7 @@ export class SearchComponent implements OnInit {
 
   podcasts: Podcast[] = [];
   filterMap: Map<string, string[]> = new Map<string, string[]>();
+  sortBy: SortByType = SortByType.DEFAULT
   pageNo: number = 0;
   pageSize: number = 5;
 
@@ -36,7 +37,7 @@ export class SearchComponent implements OnInit {
   }
 
   searchPodcasts(searchType: Number): void {
-    this.podcastListService.searchPodcasts<any>(this.filterMap, this.searchQuery, SortByType.DEFAULT, this.pageNo, this.pageSize)
+    this.podcastListService.searchPodcasts<any>(this.filterMap, this.searchQuery, this.sortBy, this.pageNo, this.pageSize)
       .subscribe(
         podcasts => this.podcasts = (searchType === SearchType.NEXT_PAGE) ? [...this.podcasts, ...podcasts] : podcasts
       );
@@ -60,8 +61,10 @@ export class SearchComponent implements OnInit {
         this.filterMap.set(key, newArray);
       }
     }
+
+    this.sortBy = event.sortByField;
     this.pageNo = 0;
-    this.podcastListService.searchPodcasts<any>(this.filterMap, this.searchQuery, event.sortByField, this.pageNo, this.pageSize)
+    this.podcastListService.searchPodcasts<any>(this.filterMap, this.searchQuery, this.sortBy, this.pageNo, this.pageSize)
       .subscribe(
         podcasts => this.podcasts = podcasts
       );

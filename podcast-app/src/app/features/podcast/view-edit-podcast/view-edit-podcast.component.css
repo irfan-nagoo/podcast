@@ -1,0 +1,21 @@
+
+.was-validated .form-control:invalid {
+    border: 1px solid #cccccc;
+    background-image: none;
+}
+
+.was-validated .form-select:invalid {
+    border: 1px solid #cccccc;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path stroke='darkslategray ' fill='darkslategray' d='M6 8l-1 1l5 5l5-5l-1-1l-4 4l-4-4z'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 20px 20px ;
+}
+
+.bg-pill {
+    background-color: #F4D669;
+}
+
+#tags, #file {
+    border: 1px solid #cccccc;
+    background-image: none;
+}

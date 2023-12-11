@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { UserActionType } from '../../../shared/constants/poadcast-constants';
-import { PermissionService } from '../../service/permission.service';
-import { AddPodcastComponent } from '../../../features/podcast/add-poadcast/add-podcast.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddPodcastComponent } from '../../../features/podcast/add-poadcast/add-podcast.component';
+import { UserActionType } from '../../../shared/constants/poadcast-constants';
 import { MessageComponent } from '../../../shared/message/message.component';
 import { MessageBroadcasterService } from '../../service/message-broadcaster.service';
+import { PermissionService } from '../../service/permission.service';
 
 @Component({
   selector: 'app-header',
@@ -48,8 +48,7 @@ export class HeaderComponent implements OnInit {
   onPermissionClick(event: any) {
     switch (event.target.id) {
       case UserActionType.CREATE:
-        const modalRef = this.modalService.open(AddPodcastComponent);
-        modalRef.componentInstance.name = 'Add Podcast';
+        this.modalService.open(AddPodcastComponent);
         break;
       case UserActionType.APPROVE:
       //

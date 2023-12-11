@@ -54,7 +54,7 @@ export class AddPodcastComponent implements OnInit {
     const formData = new FormData();
     formData.append('json', JSON.stringify(this.addPodCastForm.value));
     formData.append('file', this.audioFile);
-
+   
     // POST
     this.podcastService.addPodcast<any>(formData)
       .subscribe(podcast => {

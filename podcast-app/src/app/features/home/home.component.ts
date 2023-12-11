@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   podcasts: Podcast[] = [];
   filterMap: Map<string, string[]> = new Map<string, string[]>();
+  sortBy: SortByType = SortByType.DEFAULT;
   pageNo: number = 0;
   pageSize: number = 5;
 
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
 
 
   getAllPodcasts(): void {
-    this.podcastListService.getAllPodcasts<any>(this.filterMap, SortByType.DEFAULT, this.pageNo, this.pageSize)
+    this.podcastListService.getAllPodcasts<any>(this.filterMap, this.sortBy, this.pageNo, this.pageSize)
       .subscribe(podcasts => {
         if (podcasts.length >= 0) {
           this.podcasts = [...this.podcasts, ...podcasts];
@@ -60,8 +61,10 @@ export class HomeComponent implements OnInit {
         this.filterMap.set(key, newArray);
       }
     }
+
+    this.sortBy = event.sortByField;
     this.pageNo = 0;
-    this.podcastListService.getAllPodcasts<any>(this.filterMap, event.sortByField, this.pageNo, this.pageSize)
+    this.podcastListService.getAllPodcasts<any>(this.filterMap, this.sortBy, this.pageNo, this.pageSize)
       .subscribe(
         podcasts => {
           if (podcasts.length >= 0) {
@@ -83,13 +86,22 @@ export class HomeComponent implements OnInit {
 
   subscribeToUpdates() {
     this.messageBroadcaster.recieveMessage().subscribe(message => {
-      if (message.status !== ResponseStatusType.ERROR) {
+      if (message.status === ResponseStatusType.SUCCESS) {
         switch (message.action) {
           case PodcastActionType.CREATE:
             this.podcasts.unshift(message.content);
             break;
           case PodcastActionType.MODIFY:
-            //
+            const podcast = message.content;
+            const index: number = this.podcasts.findIndex(e => e.id === podcast.id);
+            if (index !== -1) {
+              if (this.sortBy === SortByType.NEWEST || this.sortBy === SortByType.DEFAULT) {
+                this.podcasts = this.podcasts.filter(e => e.id !== podcast.id);
+                this.podcasts.unshift(podcast);
+              } else {
+                this.podcasts[index] = podcast;
+              }
+            }
             break;
           case PodcastActionType.DELETE:
             //

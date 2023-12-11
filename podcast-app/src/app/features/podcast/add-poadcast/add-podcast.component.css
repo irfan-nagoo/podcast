@@ -14,3 +14,8 @@
 .bg-pill {
     background-color: #F4D669;
 }
+
+#tags {
+    border: 1px solid #cccccc;
+    background-image: none;
+}

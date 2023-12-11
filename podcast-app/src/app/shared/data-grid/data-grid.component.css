@@ -9,5 +9,11 @@
 }
 
 .bg-silver {
-    background-color: #f2f0e9;
+    background-color: #F5F5F5;
+}
+
+.bg-silver:hover {
+    background-color: #F0F0F0;
+    margin: 5px;
+    transition: 0.15s;
 }

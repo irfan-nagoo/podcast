@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { Podcast } from '../../core/model/podcast';
 import { StaticService } from '../../core/service/static.service';
 import { TagsService } from '../../core/service/tags.service';
+import { ViewEditPodcastComponent } from '../../features/podcast/view-edit-podcast/view-edit-podcast.component';
 
 @Component({
   selector: 'app-data-grid',
   standalone: true,
-  imports: [CommonModule, InfiniteScrollModule],
+  imports: [CommonModule, InfiniteScrollModule, ViewEditPodcastComponent],
   templateUrl: './data-grid.component.html',
   styleUrl: './data-grid.component.css'
 })
@@ -27,7 +29,8 @@ export class DataGridComponent implements OnInit {
   showFilterBy: boolean = false;
   selectedSortBy: string = "Newest";
 
-  constructor(private staticService: StaticService, private tagsService: TagsService) { }
+  constructor(private staticService: StaticService, private tagsService: TagsService,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -78,6 +81,11 @@ export class DataGridComponent implements OnInit {
 
   onScroll() {
     this.scrollDownEvent.emit("scrollDownEvent");
+  }
+
+  onRecordClick(id: number) {
+    const modalRef = this.modalService.open(ViewEditPodcastComponent);
+    modalRef.componentInstance.id = id;
   }
 
 }

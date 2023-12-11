@@ -26,7 +26,6 @@ server.use(middleWares);
 const jsonPath = path.join(process.cwd(), './db.json');
 
 server.post("/podcasts", upload.single("file"), function (req, res) {
-    console.log('POST', req.path);
     const reqJson = JSON.parse(req.body.json);
     const podcasts = jsonDataStore.podcasts;
     reqJson.id = podcasts.length > 0 ? podcasts[podcasts.length - 1].id + 1 : 1;
@@ -40,17 +39,17 @@ server.post("/podcasts", upload.single("file"), function (req, res) {
     res.status(201).json(reqJson);
 });
 
+
 server.put("/podcasts/:id", upload.single("file"), function (req, res) {
-    console.log('PUT', req.path);
     const reqJson = JSON.parse(req.body.json);
     const podcast = jsonDataStore.podcasts.find(element => element.id === reqJson.id);
     if (podcast) {
-        if (req.file) {
+        if (req.file.size) {
             podcast.uri = `/audio/${req.file.filename}`;
             podcast.duration = reqJson.duration;
         }
         podcast.title = reqJson.title;
-        podcast.descrption = reqJson.descrption;
+        podcast.description = reqJson.description;
         podcast.author = reqJson.author;
         podcast.category = reqJson.category;
         podcast.tags = reqJson.tags;
@@ -67,27 +66,28 @@ server.put("/podcasts/:id", upload.single("file"), function (req, res) {
     }
 });
 
+
 //static
 server.get("/static/categories", function (req, res) {
-    res.status(200).json({categories: ["General", "Science", "Software", "Technology"]});
+    res.status(200).json({ categories: ["General", "Science", "Software", "Technology"] });
 });
 
 
 server.get("/static/durations", function (req, res) {
-    res.status(200).json({durations: ["0-5", "5-10", "10 or more"]});
+    res.status(200).json({ durations: ["0-5", "5-10", "10 or more"] });
 });
 
 server.get("/static/sort-fields", function (req, res) {
-    res.status(200).json({sortFields: ["Newest", "Most Rated", "Title"]});
+    res.status(200).json({ sortFields: ["Newest", "Most Rated", "Title"] });
 });
 
 //permissions
 server.get("/permission/user-level", function (req, res) {
-    res.status(200).json({permissions: ["Create New Podcast", "Approve Podcasts"]});
+    res.status(200).json({ permissions: ["Create New Podcast", "Approve Podcasts"] });
 });
 
 server.get("/permission/row-level", function (req, res) {
-    res.status(200).json({permissions: ["Delete Poadcast"]});
+    res.status(200).json({ permissions: ["Delete Poadcast"] });
 });
 
 server.use(router);

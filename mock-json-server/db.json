@@ -25,23 +25,27 @@
         "Biotechnology"
       ],
       "createDate": "2023-11-30T08:02:35.356Z",
-      "modifiedDate": "2023-11-30T08:13:32.417Z",
+      "modifiedDate": "2023-12-11T15:51:35.576Z",
       "id": 2,
-      "uri": "/audio/bc3059f1-22b7-4788-9a6f-0270d4e66eb1.svg+xml"
+      "uri": "/audio/e215de2c-9e53-4ae3-b28e-16fdaa6870be.wav",
+      "description": "This podcast is about the ongoing Biotechnological advancements in Canada.",
+      "duration": 1
     },
     {
       "title": "A Recipe to make tasty burger",
       "descrption": "This podcast is about new biotechnology advancement",
-      "author": "James Kens",
+      "author": "James Maks",
       "category": "Technology",
       "tags": [
         "Food",
         "Technology"
       ],
       "createDate": "2023-12-01T08:02:35.356Z",
-      "modifiedDate": "2023-12-01T08:13:32.417Z",
+      "modifiedDate": "2023-12-11T15:55:13.778Z",
       "id": 3,
-      "uri": "/audio/bc3059f1-22b7-4788-9a6f-0270d4e66eb1.svg+xml"
+      "uri": "/audio/a113a8e8-44cc-48b8-a2df-aec19a277bcd.mp3",
+      "duration": 0.32,
+      "description": "This podcast is about the cheese burger recipe."
     },
     {
       "title": "An interview with wall street executive",
@@ -72,25 +76,29 @@
       "uri": "/audio/bc3059f1-22b7-4788-9a6f-0270d4e66eb1.svg+xml"
     },
     {
-      "title": "Drink and drive accident in downtown Texas",
+      "title": "Drink and drive accident in downtown Huston",
       "descrption": "This podcast is about new biotechnology advancement",
-      "author": "Martha Wills",
+      "author": "John Wills",
       "category": "General",
       "tags": [
         "General",
         "Life"
       ],
       "createDate": "2023-12-04T09:02:35.356Z",
-      "modifiedDate": "2023-12-04T09:13:32.417Z",
+      "modifiedDate": "2023-12-11T15:48:52.802Z",
       "id": 6,
-      "uri": "/audio/bc3059f1-22b7-4788-9a6f-0270d4e66eb1.svg+xml"
+      "uri": "/audio/30b1cc71-3ee6-47d9-b3ad-f0e407b3fd6d.wav",
+      "duration": 1,
+      "description": "This podcast is about recent accident in Huston"
     },
     {
       "title": "New podcast on global warming",
       "description": "This podcast is about global warming",
       "category": "General",
       "author": "Mike Jones",
-      "tags": "Software",
+      "tags": [
+        "Software"
+      ],
       "id": 7,
       "uri": "/audio/3765c513-7310-432b-b69f-263f5c79e253.mp3",
       "createDate": "2023-12-06T15:49:35.842Z",
@@ -101,7 +109,9 @@
       "description": "The podcast on political affairs",
       "category": "Software",
       "author": "Mike Jones",
-      "tags": "Political",
+      "tags": [
+        "Political"
+      ],
       "id": 8,
       "uri": "/audio/affcd96c-c714-4c2b-8c85-e2503682c149.mp3",
       "createDate": "2023-12-06T16:02:45.864Z",
@@ -112,7 +122,9 @@
       "description": "The pod cast on environment change",
       "category": "Science",
       "author": "John Wills",
-      "tags": "Environment",
+      "tags": [
+        "Environment"
+      ],
       "id": 9,
       "uri": "/audio/837fa9f9-5e9d-459e-bad2-d48167e18363.mp3",
       "createDate": "2023-12-06T16:36:31.078Z",
@@ -123,7 +135,9 @@
       "description": "This podcast is about nature",
       "category": "General",
       "author": "John Wills",
-      "tags": "Environment",
+      "tags": [
+        "Environment"
+      ],
       "id": 10,
       "uri": "/audio/0d402f82-d73d-4b09-aad4-31d77e38ff83.mp3",
       "createDate": "2023-12-07T14:36:09.988Z",
@@ -146,7 +160,7 @@
     },
     {
       "title": "A Podcast on recent townhall event in New York",
-      "description": "This podcast is about recent townhall event ",
+      "description": "This podcast is about recent townhall event  in New York",
       "category": "Technology",
       "author": "Stacy Jones",
       "tags": [
@@ -157,7 +171,7 @@
       "id": 12,
       "uri": "/audio/02deb37b-d816-4347-b6d2-62ad273cca94.mp3",
       "createDate": "2023-12-08T16:24:41.728Z",
-      "modifiedDate": "2023-12-08T16:24:41.728Z"
+      "modifiedDate": "2023-12-11T15:55:59.238Z"
     }
   ],
   "tags": [

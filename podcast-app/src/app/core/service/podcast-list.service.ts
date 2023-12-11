@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
-import { SortByType } from '../../shared/constants/poadcast-constants';
+import { FilterFieldType, SortByType } from '../../shared/constants/poadcast-constants';
 import { ErrorHandlerService } from '../../shared/error/error-handler.service';
 import { ConfigService } from './config.service';
 
@@ -58,17 +58,22 @@ export class PodcastListService {
     filterMap.forEach((value, key) => {
       value.forEach(v => {
         // backend specific logic for duration
-        if (key === "duration") {
-          var valArr = v.split("-");
-          if (valArr.length == 1) {
-            valArr[0] = "10";
-            filterUri = filterUri + "&" + key + "_gte=" + valArr[0];
-          } else {
-            filterUri = filterUri + "&" + key + "_gte=" + valArr[0];
-            filterUri = filterUri + "&" + key + "_lte=" + valArr[1]; 
-          }
-        } else {
-          filterUri = filterUri + "&" + key + "=" + v;
+        switch (key) {
+          case FilterFieldType.DUARTAION:
+            var valArr = v.split("-");
+            if (valArr.length == 1) {
+              valArr[0] = "10";
+              filterUri = filterUri + "&" + key + "_gte=" + valArr[0];
+            } else {
+              filterUri = filterUri + "&" + key + "_gte=" + valArr[0];
+              filterUri = filterUri + "&" + key + "_lte=" + valArr[1];
+            }
+            break;
+          case FilterFieldType.TAGS:
+            filterUri = filterUri + "&" + key + "_like=" + v;
+            break;
+          case FilterFieldType.CATEGORY:
+            filterUri = filterUri + "&" + key + "=" + v;
         }
       })
     });
