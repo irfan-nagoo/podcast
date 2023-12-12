@@ -83,7 +83,7 @@ server.get("/static/sort-fields", function (req, res) {
 
 //permissions
 server.get("/permission/user-level", function (req, res) {
-    res.status(200).json({ permissions: ["Create New Podcast", "Approve Podcasts"] });
+    res.status(200).json({ permissions: ["Create New Podcast"] });
 });
 
 server.get("/permission/row-level", function (req, res) {

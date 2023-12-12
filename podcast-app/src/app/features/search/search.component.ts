@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Podcast } from '../../core/model/podcast';
 import { MessageBroadcasterService } from '../../core/service/message-broadcaster.service';
 import { PodcastListService } from '../../core/service/podcast-list.service';
-import { SearchType, SortByType } from '../../shared/constants/poadcast-constants';
+import { PodcastActionType, ResponseStatusType, SearchType, SortByType } from '../../shared/constants/poadcast-constants';
 import { DataGridComponent } from '../../shared/data-grid/data-grid.component';
 import { MessageComponent } from '../../shared/message/message.component';
 
@@ -28,6 +28,7 @@ export class SearchComponent implements OnInit {
     private messageBroadcaster: MessageBroadcasterService) { }
 
   ngOnInit(): void {
+    this.subscribeToUpdates();
     this.route.queryParams
       .subscribe(params => {
         this.pageNo = 0;
@@ -73,6 +74,17 @@ export class SearchComponent implements OnInit {
   onScrollDown(event: any) {
     this.pageNo++;
     this.searchPodcasts(SearchType.NEXT_PAGE);
+  }
+
+  subscribeToUpdates() {
+    this.messageBroadcaster.recieveMessage().subscribe(message => {
+      // only interested in deletes
+      if (message.status === ResponseStatusType.SUCCESS
+        && message.action === PodcastActionType.DELETE) {
+        const id = message.content;
+        this.podcasts = this.podcasts.filter(e => e.id !== id);
+      }
+    });
   }
 
 }

@@ -1,9 +1,8 @@
-import { HttpClient,  } from '@angular/common/http';
+import { HttpClient, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ErrorHandlerService } from '../../shared/error/error-handler.service';
-import { Podcast } from '../model/podcast';
 import { ConfigService } from './config.service';
 
 @Injectable({
@@ -30,6 +29,13 @@ export class PodcastService {
 
   updatePodcast<T>(id: number, formData: FormData): Observable<T> {
     return this.httpClient.put<T>(`${this.configService.getApiBaseUrl()}/podcasts/${id}`, formData)
+      .pipe(
+        catchError(this.errorHandler.handleError)
+      );
+  }
+
+  deletePodcast<T>(id: number): Observable<T> {
+    return this.httpClient.delete<T>(`${this.configService.getApiBaseUrl()}/podcasts/${id}`)
       .pipe(
         catchError(this.errorHandler.handleError)
       );

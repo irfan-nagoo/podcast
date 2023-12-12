@@ -104,8 +104,8 @@ export class HomeComponent implements OnInit {
             }
             break;
           case PodcastActionType.DELETE:
-            //
-            break;
+            const id = message.content;
+            this.podcasts = this.podcasts.filter(e => e.id !== id);
         }
       }
     });

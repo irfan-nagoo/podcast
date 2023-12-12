@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(json => this.userLevelPermissions = json.permissions);
   }
 
-  onPermissionClick(event: any) {
+  onActionClick(event: any) {
     switch (event.target.id) {
       case UserActionType.CREATE:
         this.modalService.open(AddPodcastComponent);

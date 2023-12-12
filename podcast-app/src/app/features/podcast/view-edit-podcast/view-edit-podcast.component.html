@@ -1,7 +1,7 @@
 <div class="modal-form-font">
     <div class="modal-header bg-indigo text-white">
         <h5 class="modal-title modal-title-font">Podcast Details</h5>
-        <button type="button" (click)="activeModal.dismiss('Cross click')" class="btn-close" data-bs-dismiss="modal"
+        <button type="button" (click)="activeModal.dismiss('Cross click')" class="btn-close btn-close-white" data-bs-dismiss="modal"
             aria-label="Close"></button>
     </div>
 
@@ -104,7 +104,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="file" class="form-label fw-bold">Audio File</label>
-                    <input type="file" class="form-control" id="file" (change)="onFileChange($event)">
+                    <input type="file" class="form-control" id="file" (change)="onFileChange($event)" 
+                        accept="audio/mpeg, audio/wav, audio/ogg">
                 </div>
             </div>
             <div class="modal-footer">

@@ -40,4 +40,6 @@ export const PODCAST_ADDED_SUCCESS = "Podcast added successfully";
 export const PODCAST_ADDED_ERROR = "An error has occured while adding Podcast. Please try again later."
 export const PODCAST_MODIFIED_SUCCESS = "Podcast modified successfully";
 export const PODCAST_MODIFIED_ERROR = "An error has occured while modifying Podcast. Please try again later."
+export const PODCAST_DELETE_SUCCESS = "Podcast deleted successfully";
+export const PODCAST_DELETE_ERROR = "An error has occured while deleting Podcast. Please try again later."
 export const API_INVOCATION_ERROR = "An error has occured while fetching data. Please try again later.";

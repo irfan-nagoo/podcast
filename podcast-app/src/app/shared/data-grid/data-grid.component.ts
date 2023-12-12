@@ -3,14 +3,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { Podcast } from '../../core/model/podcast';
+import { PermissionService } from '../../core/service/permission.service';
 import { StaticService } from '../../core/service/static.service';
 import { TagsService } from '../../core/service/tags.service';
 import { ViewEditPodcastComponent } from '../../features/podcast/view-edit-podcast/view-edit-podcast.component';
+import { DeletePodcastComponent } from '../../features/podcast/delete-podcast/delete-podcast.component';
 
 @Component({
   selector: 'app-data-grid',
   standalone: true,
-  imports: [CommonModule, InfiniteScrollModule, ViewEditPodcastComponent],
+  imports: [CommonModule, InfiniteScrollModule, ViewEditPodcastComponent, DeletePodcastComponent],
   templateUrl: './data-grid.component.html',
   styleUrl: './data-grid.component.css'
 })
@@ -26,17 +28,19 @@ export class DataGridComponent implements OnInit {
   tags: string[] = [];
   durations: string[] = [];
   sortFields: string[] = [];
+  rowLevelPermissions: string[] = [];
   showFilterBy: boolean = false;
   selectedSortBy: string = "Newest";
 
   constructor(private staticService: StaticService, private tagsService: TagsService,
-    private modalService: NgbModal) { }
+    private permissionService: PermissionService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getCategories();
     this.getTags();
     this.getDurations();
     this.getSortFields();
+    this.getRowLeveLPermissions();
   }
 
 
@@ -72,6 +76,10 @@ export class DataGridComponent implements OnInit {
     this.staticService.getSortFields().subscribe(json => this.sortFields = json.sortFields);
   }
 
+  getRowLeveLPermissions() {
+    this.permissionService.getRowLevelPermissions().subscribe(json => this.rowLevelPermissions = json.permissions);
+  }
+
   OnfilterChange(event: any) {
     this.filterChangeEvent.emit({
       filterEvent: event,
@@ -85,6 +93,11 @@ export class DataGridComponent implements OnInit {
 
   onRecordClick(id: number) {
     const modalRef = this.modalService.open(ViewEditPodcastComponent);
+    modalRef.componentInstance.id = id;
+  }
+
+  onActionClick(id: number) {
+    const modalRef = this.modalService.open(DeletePodcastComponent);
     modalRef.componentInstance.id = id;
   }
 

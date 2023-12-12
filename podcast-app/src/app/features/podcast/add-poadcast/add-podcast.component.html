@@ -1,8 +1,8 @@
 <div class="modal-form-font">
     <div class="modal-header bg-indigo text-white">
         <h5 class="modal-title modal-title-font">Create New Podcast</h5>
-        <button type="button" (click)="activeModal.dismiss('Cross click')" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+        <button type="button" (click)="activeModal.dismiss('Cross click')" class="btn-close btn-close-white"
+            data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
 
     <form class="px-2 mb-5 was-validated" [formGroup]="addPodCastForm" (ngSubmit)="onSubmit()" ngNativeValidate>
@@ -51,7 +51,8 @@
             </div>
             <div class="mb-3">
                 <label for="file" class="form-label fw-bold form-required">Audio File</label>
-                <input type="file" class="form-control" id="file" (change)="onFileChange($event)" required>
+                <input type="file" class="form-control" id="file" (change)="onFileChange($event)"
+                    accept="audio/mpeg, audio/wav, audio/ogg" required>
             </div>
         </div>
         <div class="modal-footer">
