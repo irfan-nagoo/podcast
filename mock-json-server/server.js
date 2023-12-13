@@ -30,6 +30,7 @@ server.post("/podcasts", upload.single("file"), function (req, res) {
     const podcasts = jsonDataStore.podcasts;
     reqJson.id = podcasts.length > 0 ? podcasts[podcasts.length - 1].id + 1 : 1;
     reqJson.uri = `/audio/${req.file.filename}`;
+    reqJson.duration = reqJson.duration;
     reqJson.createDate = new Date().toISOString();
     reqJson.modifiedDate = new Date().toISOString();
     podcasts.push(reqJson);

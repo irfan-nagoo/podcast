@@ -8,11 +8,12 @@ import { StaticService } from '../../core/service/static.service';
 import { TagsService } from '../../core/service/tags.service';
 import { ViewEditPodcastComponent } from '../../features/podcast/view-edit-podcast/view-edit-podcast.component';
 import { DeletePodcastComponent } from '../../features/podcast/delete-podcast/delete-podcast.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-data-grid',
   standalone: true,
-  imports: [CommonModule, InfiniteScrollModule, ViewEditPodcastComponent, DeletePodcastComponent],
+  imports: [RouterModule, CommonModule, InfiniteScrollModule, ViewEditPodcastComponent, DeletePodcastComponent],
   templateUrl: './data-grid.component.html',
   styleUrl: './data-grid.component.css'
 })

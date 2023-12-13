@@ -23,7 +23,7 @@ export class ViewEditPodcastComponent implements OnInit {
   podcast: Podcast = new Podcast();
   audioFile: Blob = new Blob();
   audioDuration: number = 0;
-  audioBaseUri: string = '';
+  audioUrl: string = '';
   addPodCastForm: FormGroup = this.formBuilder.group({});
   categories: string[] = [];
   tags: string[] = [];
@@ -38,13 +38,13 @@ export class ViewEditPodcastComponent implements OnInit {
   ngOnInit(): void {
     this.getCategories();
     this.getPodcast();
-    this.audioBaseUri = this.configService.getApiBaseUrl();
   }
 
   getPodcast() {
     this.podcastService.getPodcast<any>(this.id).subscribe(podcast => {
       this.podcast = podcast;
-      this.selectedTags = podcast.tags;
+      this.selectedTags = this.podcast.tags;
+      this.audioUrl = this.configService.getApiBaseUrl() + this.podcast.uri;
       this.addPodCastForm = this.formBuilder.group({
         title: new FormControl(this.podcast.title),
         description: new FormControl(this.podcast.description),
@@ -58,11 +58,15 @@ export class ViewEditPodcastComponent implements OnInit {
   onFileChange(event: any) {
     this.audioFile = event.target.files[0];
     var url = URL.createObjectURL(this.audioFile);
-    var audio = new Audio(url);
-    audio.addEventListener("loadedmetadata", (e) => {
-      this.addPodCastForm.value.duration = (audio.duration) / 60;
+    var audio = new Audio();
+    audio.onloadedmetadata = (e) => {
+      const min = Math.floor(audio.duration / 60);
+      var extraSec = Math.floor(audio.duration % 60);
+      this.addPodCastForm.value.duration = Number.parseFloat(min + "."
+        + extraSec.toString().padStart(2, '0'));
       URL.revokeObjectURL(audio.src);
-    });
+    };
+    audio.src = url;
   }
 
 
@@ -78,7 +82,7 @@ export class ViewEditPodcastComponent implements OnInit {
     const formData = new FormData();
     formData.append('json', JSON.stringify(this.podcast));
     formData.append('file', this.audioFile);
-    
+
     // PUT
     this.podcastService.updatePodcast<any>(this.id, formData)
       .subscribe(podcast => {

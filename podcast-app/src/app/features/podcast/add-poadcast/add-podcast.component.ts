@@ -42,11 +42,15 @@ export class AddPodcastComponent implements OnInit {
   onFileChange(event: any) {
     this.audioFile = event.target.files[0];
     var url = URL.createObjectURL(this.audioFile);
-    var audio = new Audio(url);
-    audio.addEventListener("loadedmetadata", (e) => {
-      this.addPodCastForm.value.duration = (audio.duration) / 60;
+    var audio = new Audio();
+    audio.onloadedmetadata = (e) => {
+      const min = Math.floor(audio.duration / 60);
+      var extraSec = Math.floor(audio.duration % 60);
+      this.addPodCastForm.value.duration = Number.parseFloat(min + "."
+        + extraSec.toString().padStart(2, '0'));
       URL.revokeObjectURL(audio.src);
-    });
+    };
+    audio.src = url;
   }
 
   onSubmit(): void {
@@ -54,7 +58,7 @@ export class AddPodcastComponent implements OnInit {
     const formData = new FormData();
     formData.append('json', JSON.stringify(this.addPodCastForm.value));
     formData.append('file', this.audioFile);
-   
+
     // POST
     this.podcastService.addPodcast<any>(formData)
       .subscribe(podcast => {
@@ -92,6 +96,7 @@ export class AddPodcastComponent implements OnInit {
   }
 
   onTagEnter(event: any) {
+    event.preventDefault();
     this.selectedTags.push(event.target.value);
     event.target.value = "";
   }

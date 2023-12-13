@@ -1,15 +1,14 @@
-import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
-import { APP_INITIALIZER } from '@angular/core';
-import { ConfigService } from './core/service/config.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfigService } from './core/service/config.service';
 
+import { provideClientHydration, withHttpTransferCacheOptions } from '@angular/platform-browser';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), importProvidersFrom(HttpClientModule), {
+  providers: [provideRouter(routes), provideHttpClient(withFetch()), {
     provide: APP_INITIALIZER,
     multi: true,
     deps: [ConfigService],
@@ -18,5 +17,5 @@ export const appConfig: ApplicationConfig = {
         return configService.loadConfig();
       };
     }
-  }, NgbActiveModal ]
+  }, NgbActiveModal, provideClientHydration(withHttpTransferCacheOptions({ includePostRequests: true, }))]
 };

@@ -89,7 +89,9 @@ export class HomeComponent implements OnInit {
       if (message.status === ResponseStatusType.SUCCESS) {
         switch (message.action) {
           case PodcastActionType.CREATE:
-            this.podcasts.unshift(message.content);
+            if (this.sortBy === SortByType.NEWEST || this.sortBy === SortByType.DEFAULT) {
+              this.podcasts.unshift(message.content);
+            }
             break;
           case PodcastActionType.MODIFY:
             const podcast = message.content;
