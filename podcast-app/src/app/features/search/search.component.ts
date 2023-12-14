@@ -78,13 +78,22 @@ export class SearchComponent implements OnInit {
 
   subscribeToUpdates() {
     this.messageBroadcaster.recieveMessage().subscribe(message => {
-      // only interested in deletes
-      if (message.status === ResponseStatusType.SUCCESS
-        && message.action === PodcastActionType.DELETE) {
-        const id = message.content;
-        this.podcasts = this.podcasts.filter(e => e.id !== id);
+      // only interested in modify and deletes
+      if (message.status === ResponseStatusType.SUCCESS) {
+        switch (message.action) {
+          case PodcastActionType.DELETE:
+            const id = message.content;
+            this.podcasts = this.podcasts.filter(e => e.id !== id);
+            break;
+          case PodcastActionType.MODIFY:
+            const podcast = message.content;
+            const index: number = this.podcasts.findIndex(e => e.id === podcast.id);
+            if (index !== -1) {
+              this.podcasts[index] = podcast;
+            }
       }
+    }
     });
-  }
+}
 
 }
